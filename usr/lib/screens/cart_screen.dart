@@ -81,7 +81,7 @@ class CartScreen extends StatelessWidget {
                   cart.removeItem(items[i].productId);
                 },
                 background: Container(
-                  color: Theme.of(context).errorColor,
+                  color: Theme.of(context).colorScheme.error,
                   alignment: Alignment.centerRight,
                   padding: const EdgeInsets.only(right: 20),
                   child: const Icon(Icons.delete, color: Colors.white, size: 40),
@@ -91,8 +91,9 @@ class CartScreen extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.all(5.0),
                       child: FittedBox(
-                        child: Text('
-                          '\$${items[i].price.toStringAsFixed(2)}'
+                        child: Text(
+                          '\$${items[i].price.toStringAsFixed(2)}',
+                          style: const TextStyle(fontSize: 12),
                         ),
                       ),
                     ),
