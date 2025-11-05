@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../models/product.dart';
 import '../widgets/product_card.dart';
-import '../widgets/badge.dart';
+// Alias our custom Badge widget to avoid conflict with Flutter's built-in Badge
+import '../widgets/badge.dart' as custom_badge;
 import '../screens/cart_screen.dart';
 import '../providers/cart_provider.dart';
 
@@ -48,7 +49,7 @@ class HomeScreen extends StatelessWidget {
         title: const Text('Andy Cell'),
         actions: [
           Consumer<CartProvider>(
-            builder: (_, cart, child) => Badge(
+            builder: (_, cart, child) => custom_badge.Badge(
               child: child!,
               value: cart.itemCount.toString(),
             ),
