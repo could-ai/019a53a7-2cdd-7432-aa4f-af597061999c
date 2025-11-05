@@ -22,7 +22,8 @@ class CartProvider with ChangeNotifier {
 
   Map<String, CartItem> get items => {..._items};
 
-  int get itemCount => _items.length;
+  int get itemCount =>
+      _items.values.fold(0, (sum, item) => sum + item.quantity);
 
   double get totalAmount {
     double total = 0.0;
@@ -66,6 +67,28 @@ class CartProvider with ChangeNotifier {
 
   void clear() {
     _items.clear();
+    notifyListeners();
+  }
+
+  // New method to adjust quantity by delta (+1 or -1)
+  void addItemQuantity(String productId, int delta) {
+    if (!_items.containsKey(productId)) return;
+    final existing = _items[productId]!;
+    final newQuantity = existing.quantity + delta;
+    if (newQuantity <= 0) {
+      _items.remove(productId);
+    } else {
+      _items.update(
+        productId,
+        (_) => CartItem(
+          id: existing.id,
+          productId: existing.productId,
+          name: existing.name,
+          quantity: newQuantity,
+          price: existing.price,
+        ),
+      );
+    }
     notifyListeners();
   }
 }

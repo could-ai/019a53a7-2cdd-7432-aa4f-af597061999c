@@ -99,8 +99,34 @@ class CartScreen extends StatelessWidget {
                     ),
                   ),
                   title: Text(items[i].name),
-                  subtitle: Text('Total: \$${(items[i].price * items[i].quantity).toStringAsFixed(2)}'),
-                  trailing: Text('${items[i].quantity} x'),
+                  subtitle: Text('Total: '
+                      '\$${(items[i].price * items[i].quantity).toStringAsFixed(2)}'),
+                  // Added quantity adjustment buttons
+                  trailing: SizedBox(
+                    width: 120,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.remove),
+                          onPressed: () {
+                            if (items[i].quantity > 1) {
+                              cart.addItemQuantity(items[i].productId, -1);
+                            } else {
+                              cart.removeItem(items[i].productId);
+                            }
+                          },
+                        ),
+                        Text('${items[i].quantity}', style: const TextStyle(fontSize: 16)),
+                        IconButton(
+                          icon: const Icon(Icons.add),
+                          onPressed: () {
+                            cart.addItemQuantity(items[i].productId, 1);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
